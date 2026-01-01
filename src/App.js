@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AddDesign from "./pages/Add";
 import UpdateDesign from "./pages/UpdateDesign";
-
+import Upload from "./pages/Upload";
 import "./App.css";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/add" element={<AddDesign />} />
         <Route path="/admin/update/:id" element={<UpdateDesign />} />
+        <Route path="/upload" element={<Upload />} />
       </Routes>
       <Footer />
     </Router>

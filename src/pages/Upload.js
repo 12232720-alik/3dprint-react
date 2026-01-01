@@ -7,6 +7,7 @@ function Upload() {
   const [email, setEmail] = useState("");
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,11 +17,21 @@ function Upload() {
     formData.append("customer_email", email);
     formData.append("file", file);
 
-    await axios.post(`${process.env.REACT_APP_API_URL}/upload`, formData);
-    setSuccess(true);
-    setName("");
-    setEmail("");
-    setFile(null);
+    try {
+   
+      const res = await axios.post("http://localhost:5000/upload", formData);
+      console.log(res.data);
+
+      setSuccess(true);
+      setError("");
+      setName("");
+      setEmail("");
+      setFile(null);
+    } catch (err) {
+      console.error("Upload failed:", err.response?.data || err.message);
+      setError("Upload failed. Please try again.");
+      setSuccess(false);
+    }
   };
 
   return (
@@ -54,11 +65,8 @@ function Upload() {
 
           <button type="submit">Upload File</button>
 
-          {success && (
-            <p className="success">
-              File uploaded successfully 
-            </p>
-          )}
+          {success && <p className="success">File uploaded successfully!</p>}
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </div>
