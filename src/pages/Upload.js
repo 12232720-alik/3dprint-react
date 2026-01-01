@@ -16,7 +16,7 @@ function Upload() {
     formData.append("customer_email", email);
     formData.append("file", file);
 
-    await axios.post("http://localhost:5000/upload", formData);
+    await axios.post(`${process.env.REACT_APP_API_URL}/upload`, formData);
     setSuccess(true);
     setName("");
     setEmail("");

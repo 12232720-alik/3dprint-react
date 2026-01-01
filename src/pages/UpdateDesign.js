@@ -11,7 +11,7 @@ const UpdateDesign = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/search/${id}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/search/${id}`).then((res) => {
       setName(res.data[0].name);
       setPrice(res.data[0].price);
       setImage(res.data[0].image);

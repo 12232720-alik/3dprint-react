@@ -7,7 +7,7 @@ function Designs() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/designs")
+  axios.get(`${process.env.REACT_APP_API_URL}/designs`)
       .then((res) => setDesigns(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -21,7 +21,7 @@ function Designs() {
 
           {d.image && (
             <img
-              src={`http://localhost:5000/images/${d.image}`}
+              src={`${process.env.REACT_APP_API_URL}/images/${d.image}`}
               alt={d.name}
               style={{ width: "200px" }}
             />
