@@ -1,0 +1,55 @@
+/* Add.css */
+.add-form {
+  width: 400px;
+  margin: 50px auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.add-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-form input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-form button:hover {
+  background-color: #45a049;
+}
+
+.add-form p {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+}
+
+.add-form a {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #2196F3;
+  text-decoration: none;
+}
+
+.add-form a:hover {
+  text-decoration: underline;
+}

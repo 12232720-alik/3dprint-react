@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/Contact.css";
 
+import "../styles/Form.css";
 function Contact() {
   return (
     <div className="contact">

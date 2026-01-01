@@ -1,0 +1,68 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  background: var(--bg-card);
+  padding: 35px;
+  width: 400px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+.form h1 {
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 25px;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #1b233a;
+  color: var(--text-main);
+  font-size: 15px;
+}
+
+.form input::placeholder {
+  color: #999;
+}
+
+.form input[type="file"] {
+  background: transparent;
+}
+
+.form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--accent), #f2c18d);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(230,176,126,0.4);
+}
+
+.form a {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.form a:hover {
+  text-decoration: underline;
+}

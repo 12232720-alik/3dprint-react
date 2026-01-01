@@ -1,0 +1,78 @@
+
+.home {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #020617, #0f172a);
+  color: #e5e7eb;
+}
+
+
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  max-width: 520px;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin-bottom: 35px;
+}
+
+
+.hero-btn {
+  padding: 14px 32px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #020617;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.35s ease;
+}
+
+.hero-btn:hover {
+  background: linear-gradient(135deg, #fde047, #facc15);
+  transform: scale(1.08);
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  padding: 60px 40px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+.feature-card p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}

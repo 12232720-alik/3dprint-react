@@ -1,27 +1,37 @@
-import { useDesigns } from '../DesignContext';
-import { useCart } from '../CartContext';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useCart } from "../CartContext";
+import "../styles/Designs.css";
 function Designs() {
-  const { designs } = useDesigns();
+  const [designs, setDesigns] = useState([]);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/designs")
+      .then((res) => setDesigns(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="designs">
-      <h1>Available Designs</h1>
+      {designs.map((d) => (
+        <div key={d.id} className="design-card">
+          <h3>{d.name}</h3>
+          <p>${d.price}</p>
 
-      {designs.length === 0 ? (
-        <p>No designs available.</p>
-      ) : (
-        <div className="design-grid">
-          {designs.map((d) => (
-            <div key={d.id} className="design-card">
-              <h3>{d.name}</h3>
-              <p>${d.price.toFixed(2)}</p>
-              <button onClick={() => addToCart(d)}>Add to Cart</button>
-            </div>
-          ))}
+          {d.image && (
+            <img
+              src={`http://localhost:5000/images/${d.image}`}
+              alt={d.name}
+              style={{ width: "200px" }}
+            />
+          )}
+
+          <button onClick={() => addToCart(d)}>
+            Add to Cart
+          </button>
         </div>
-      )}
+      ))}
     </div>
   );
 }

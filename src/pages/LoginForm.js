@@ -1,36 +1,49 @@
-import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-
-  // SAFE access to context
-  // SAFE access to context
   const auth = useAuth();
-  const login = auth ? auth.login : () => false;
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  if (!auth) {
+    return <p>Auth system not ready</p>;
+  }
+
+  const { login } = auth;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (login(username, password, email)) {
-      alert('Login successful!');
-      navigate('/admin');
-    } else {
-      alert('Invalid credentials!');
+
+    try {
+      const success = await login(username, password, email);
+
+      if (success) {
+        alert("Login successful!");
+        navigate("/admin");
+      } else {
+        alert("Invalid login!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>Admin Login</h2>
 
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        required
       />
 
       <input
@@ -38,6 +51,7 @@ function LoginForm() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
 
       <input
@@ -45,6 +59,7 @@ function LoginForm() {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
 
       <button type="submit">Login</button>

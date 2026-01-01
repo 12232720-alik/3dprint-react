@@ -1,18 +1,30 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Stores logged-in user info
+  const [user, setUser] = useState(null);
 
-  const login = (username, password,email) => {
-    // In a real app, you'd call an API to verify credentials
-    // For this example, a simple check:
-    if (username === 'Ali' && password === 'Alik'&& email === 'Alikhalil1233214@gmail.com') {
-      setUser({ username });
-      return true;
+  const login = async (username, password, email) => {
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.admin) {
+        setUser(data.admin);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {
@@ -26,6 +38,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

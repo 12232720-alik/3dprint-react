@@ -6,7 +6,6 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const addToCart = (item) => {
-    // Optionally check if item already exists to increase quantity
     setCart((prev) => [...prev, item]);
   };
 
