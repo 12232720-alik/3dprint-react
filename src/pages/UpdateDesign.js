@@ -10,24 +10,41 @@ const UpdateDesign = () => {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/search/${id}`).then((res) => {
-      setName(res.data[0].name);
-      setPrice(res.data[0].price);
-      setImage(res.data[0].image);
-    });
-  }, [id]);
+  const API_URL = process.env.REACT_APP_API_URL; 
 
+  
+  useEffect(() => {
+    const fetchDesign = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/search/${id}`);
+        const design = res.data[0];
+        setName(design.name);
+        setPrice(design.price);
+        setImage(design.image);
+      } catch (err) {
+        console.error("Error fetching design:", err);
+      }
+    };
+    fetchDesign();
+  }, [id, API_URL]);
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
+
+    
     if (image instanceof File) formData.append("image", image);
 
-    await axios.post(`http://localhost:5000/modify/${id}`, formData);
-    navigate("/admin");
+    try {
+      await axios.post(`${API_URL}/modify/${id}`, formData);
+      navigate("/admin");
+    } catch (err) {
+      console.error("Update error:", err);
+    }
   };
 
   return (
@@ -38,8 +55,13 @@ const UpdateDesign = () => {
       <input value={price} onChange={(e) => setPrice(e.target.value)} />
       <input type="file" onChange={(e) => setImage(e.target.files[0])} />
 
+    
       {image && !(image instanceof File) && (
-        <img src={`http://localhost:5000/images/${image}`} width="100" />
+        <img
+          src={`${API_URL}/images/${image}`}
+          width="50"
+          alt={name || "Design image"}
+        />
       )}
 
       <button onClick={handleSubmit}>Update</button>

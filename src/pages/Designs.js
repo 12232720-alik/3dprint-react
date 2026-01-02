@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useCart } from "../CartContext";
-import "../styles/Designs.css";
-function Designs() {
+
+const Designs = () => {
   const [designs, setDesigns] = useState([]);
-  const { addToCart } = useCart();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/designs")
-      .then((res) => setDesigns(res.data))
-      .catch((err) => console.log(err));
+    const fetchDesigns = async () => {
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/designs`);
+        setDesigns(res.data);
+      } catch (err) {
+        console.error("Error fetching designs:", err);
+      }
+    };
+
+    fetchDesigns();
   }, []);
 
   return (
-    <div className="designs">
+    <div>
       {designs.map((d) => (
-        <div key={d.id} className="design-card">
-          <h3>{d.name}</h3>
-          <p>${d.price}</p>
-
-          {d.image && (
-            <img
-              src={`http://localhost:5000/images/${d.image}`}
-              alt={d.name}
-              style={{ width: "200px" }}
-            />
-          )}
-
-          <button onClick={() => addToCart(d)}>
-            Add to Cart
-          </button>
+        <div key={d.id}>
+          <img
+            src={`${process.env.REACT_APP_API_URL}${d.image}`}
+            alt={d.name || ""}
+            width="50"
+          />
+          <p>{d.name}</p>
+          <p>{d.price}</p>
         </div>
       ))}
     </div>
   );
-}
+};
 
 export default Designs;

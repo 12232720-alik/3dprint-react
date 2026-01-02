@@ -1,35 +1,27 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = async (username, password, email) => {
+  const login = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, email }),
+        body: JSON.stringify({ email, password }),
       });
-
-      const data = await response.json();
-
-      if (data.success && data.admin) {
-        setUser(data.admin);
-        return true;
-      } else {
-        return false;
-      }
+      if (!res.ok) throw new Error("Login failed");
+      const data = await res.json();
+      setUser(data);
+      return data;
     } catch (err) {
       console.error("Login error:", err);
-      return false;
     }
   };
 
-  const logout = () => {
-    setUser(null);
-  };
+  const logout = () => setUser(null);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

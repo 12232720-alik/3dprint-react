@@ -2,18 +2,34 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Admin.css";
+
 const Admin = () => {
   const [designs, setDesigns] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:5000/designs").then((res) => {
-      setDesigns(res.data);
-    });
-  }, []);
+  
+  const API_URL = process.env.REACT_APP_API_URL;
 
+  
+  useEffect(() => {
+    const fetchDesigns = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/designs`);
+        setDesigns(res.data);
+      } catch (err) {
+        console.error("Error fetching designs:", err);
+      }
+    };
+    fetchDesigns();
+  }, [API_URL]);
+
+  
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/designs/${id}`);
-    setDesigns(designs.filter((d) => d.id !== id));
+    try {
+      await axios.delete(`${API_URL}/delete/${id}`);
+      setDesigns(designs.filter((d) => d.id !== id));
+    } catch (err) {
+      console.error("Error deleting design:", err);
+    }
   };
 
   return (
@@ -33,7 +49,11 @@ const Admin = () => {
               <td>{d.name}</td>
               <td>{d.price}</td>
               <td>
-                <img src={`http://localhost:5000/images/${d.image}`} width="50" />
+                <img
+                  src={`${API_URL}${d.image}`}
+                  width="50"
+                  alt={d.name || "Design image"}
+                />
               </td>
               <td>
                 <Link to={`/admin/update/${d.id}`}>Edit</Link>

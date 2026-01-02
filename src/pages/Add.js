@@ -16,18 +16,20 @@ const Add = () => {
     formData.append("price", price);
     formData.append("image", file);
 
-    await axios.post("http://localhost:5000/adddesigns", formData);
-    navigate("/admin");
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}/adddesigns`, formData);
+      navigate("/admin");
+    } catch (error) {
+      console.error("Add design error:", error);
+    }
   };
 
   return (
     <div className="form">
       <h2>Add Design</h2>
-
       <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
       <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-
       <button onClick={handleSubmit}>Add</button>
       <Link to="/admin">Back</Link>
     </div>
